@@ -33,6 +33,8 @@ jobs:
       - name: Build with Maven (no tests)
         run: mvn -B clean package -DskipTests --file pom.xml
 
-      # Optional: Upload dependency graph for Dependabot
       - name: Update dependency graph
+        if: success()
         uses: advanced-security/maven-dependency-submission-action@v4
+        with:
+          directory: .
