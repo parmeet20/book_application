@@ -53,4 +53,10 @@ public class BookServiceImpl implements BookService {
                 () -> { throw new RuntimeException("Book not found"); }
         );
     }
+
+    @Override
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepo.findByAuthor(author);
+    }
+
 }

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: book-application
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: book-application
@@ -11,23 +11,17 @@ spec:
     metadata:
       labels:
         app: book-application
+      annotations:
+        # This annotation can be updated manually to trigger rolling updates automatically
+        kubectl.kubernetes.io/restartedAt: "2025-11-09T00:00:00Z"
     spec:
       containers:
         - name: book-application
-          image: param9999/book-application:latest
+          image: param9999/book_application:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
-          env:
-            - name: DB_HOST
-              value: "mysql"
-            - name: DB_PORT
-              value: "3306"
-            - name: DB_NAME
-              value: "book"
-            - name: DB_USERNAME
-              value: "root"
-            - name: DB_PASSWORD
-              value: "password"
+
 ---
 apiVersion: v1
 kind: Service
