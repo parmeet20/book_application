@@ -1,0 +1,38 @@
+name: book_application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      # Dummy environment variables to prevent Spring Boot MySQL errors
+      DB_HOST: localhost
+      DB_PORT: 3306
+      DB_NAME: testdb
+      DB_USERNAME: test
+      DB_PASSWORD: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: maven
+
+      # Build the project without tests (skips MySQL connection)
+      - name: Build with Maven (no tests)
+        run: mvn -B clean package -DskipTests --file pom.xml
+
+      # Optional: Upload dependency graph for Dependabot
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@v4
