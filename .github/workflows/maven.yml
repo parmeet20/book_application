@@ -11,12 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Dummy DB variables so Spring Boot starts without MySQL
-      DB_HOST: localhost
-      DB_PORT: 3306
-      DB_NAME: testdb
-      DB_USERNAME: test
-      DB_PASSWORD: test
       # Use H2 in-memory DB for tests
       SPRING_PROFILES_ACTIVE: ci
 
