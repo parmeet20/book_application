@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-application
+  template:
+    metadata:
+      labels:
+        app: book-application
+    spec:
+      containers:
+        - name: book-application
+          image: param9999/book-application:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "mysql"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: "book"
+            - name: DB_USERNAME
+              value: "root"
+            - name: DB_PASSWORD
+              value: "password"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-application
+spec:
+  selector:
+    app: book-application
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: NodePort
