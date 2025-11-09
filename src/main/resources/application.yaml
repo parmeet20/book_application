@@ -3,10 +3,10 @@ spring:
     name: demo
 
   datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:mem:demo;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
 
   jpa:
     hibernate:
@@ -14,10 +14,10 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.H2Dialect
 
-#DB_HOST=127.0.0.1;
-#DB_PORT=3306;
-#DB_NAME=book;
-#DB_USERNAME=root;
-#DB_PASSWORD=password;
+  # Optional H2 console settings
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
